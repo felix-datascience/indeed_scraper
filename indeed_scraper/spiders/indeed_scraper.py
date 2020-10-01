@@ -19,8 +19,8 @@ class JobSpider(scrapy.Spider):
 
                 'title': job.xpath('.//a/@title').get(),
 
-                # company names are sometimes nested inside hyperlink tag
-                # // searches for text nodes in all depths (nested in <a> or not)
+                # company names are sometimes nested inside <a> tags
+                # //text() gets text inside <a> tags too
                 # [string-length() > 2] ignores texts only containing "\n"
                 'company': job.xpath('.//span[@class="company"]//text()[string-length()>2]').get(),
 
@@ -30,5 +30,8 @@ class JobSpider(scrapy.Spider):
 
                 'salary': job.xpath('.//span[@class="salaryText"]/text()').get(),
 
-                'description': job.xpath('.//li/text()').getall(),
+                # descriptions are unorderd lists
+                # sometimes <b> tags are used inside the <li> tags
+                # //text() gets text inside <b> tags too
+                'description': job.xpath('.//li//text()').getall(),
             }
