@@ -33,5 +33,5 @@ class JobSpider(scrapy.Spider):
                 # descriptions are unorderd lists
                 # sometimes <b> tags are used inside the <li> tags
                 # //text() gets text inside <b> tags too
-                'description': job.xpath('.//li//text()').getall(),
+                'description': job.xpath('.//div[@class="summary"]/ul/li//text()').getall(),
             }
